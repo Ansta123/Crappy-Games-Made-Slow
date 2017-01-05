@@ -4,7 +4,7 @@ var charW = 50;
 var gravity = 3;
 var velocity = 3;
 var jumpH = 60;
-var hasJumped = true;
+var hasJumped = false;
 
 
 function init() {
@@ -28,8 +28,23 @@ function PlayerChar() {
 }
 
 function updateChar() {
-	charFall();
-	drawChar();
+	if(hasJumped == true){
+		charJump();
+		drawChar();
+	}
+	else{
+		charFall();
+		drawChar();
+	}
+}
+
+function charJump() {	
+	if(jumpH > 0){
+		player.yPos -= gravity;
+		jumpH -= 4;		
+	}
+	else
+		hasJumped = 0;
 }
 
 function charFall() {
@@ -56,7 +71,8 @@ function keyboardInput() {
 		if (event.keyCode == 38) { //Up arrow button press
 			if (hasJumped == false)
 			{ // only jump if character hasn't already jumped
-				player.yPos -= jumpH;
+				// player.yPos -= jumpH;
+				jumpH = 60;
 				hasJumped = true;
 			}
 			drawChar();
